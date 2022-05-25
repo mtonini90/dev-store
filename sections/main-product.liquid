@@ -281,23 +281,23 @@
                 {%- endfor -%}
 
                 {%- when 'collapsible_tab' -%}
-               <mt-accordion-item class="accordion">
-                <mt-accordion-header>
-                  <div class="accordion__header">
-                    {% render 'icon-accordion', icon: block.settings.icon %}
-                    <h2 class="h4 accordion__title">
-                      {{ block.settings.heading | default: block.settings.page.title }}
-                    </h2>
-                  </div>
-                  {% render 'icon-caret' %}
-                </mt-accordion-header>
-                <mt-accordion-content class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                <div class="accordion__content">
-                  {{ block.settings.content }}
-                  {{ block.settings.page.content }}
-                  </div>
-                </mt-accordion-content>
-              </mt-accordion-item>
+                    <mt-accordion-item class="accordion">
+                        <mt-accordion-header>
+                            <div class="accordion__header">
+                                {% render 'icon-accordion', icon: block.settings.icon %}
+                                <h2 class="h4 accordion__title">
+                                {{ block.settings.heading | default: block.settings.page.title }}
+                                </h2>
+                            </div>
+                            {% render 'icon-caret' %}
+                        </mt-accordion-header>
+                        <mt-accordion-content class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+                            <div class="accordion__content">
+                            {{ block.settings.content }}
+                            {{ block.settings.page.content }}
+                            </div>
+                        </mt-accordion-content>
+                    </mt-accordion-item>
             </mt-accordion>
 
         	<!--END ACCRDION-->
