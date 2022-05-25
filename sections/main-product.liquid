@@ -283,7 +283,7 @@
                     </mt-accordion-item>
                 {%- endfor -%}
 
-                {%- if block.type == 'collapsible_tab' -%}
+                {%- when 'collapsible_tab' -%}
                     <mt-accordion-item class="accordion">
                         <mt-accordion-header>
                             <div class="accordion__header">
@@ -303,7 +303,7 @@
                             </div>
                         </mt-accordion-content>
                     </mt-accordion-item>
-                {%- endif -%}
+            
             </mt-accordion>
 
         	<!--END ACCRDION-->
