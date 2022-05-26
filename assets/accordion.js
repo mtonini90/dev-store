@@ -9,18 +9,26 @@ class MtAccordionHeader extends HTMLElement {
     super();
     this.setAttribute("role", "button");
   }
+
+  static get getSelector() {
+    return "mt-accordion-header";
+  }
 }
 
-customElements.define("mt-accordion-header", MtAccordionHeader);
+customElements.define(MtAccordionHeader.getSelector, MtAccordionHeader);
 
 class MtAccordionContent extends HTMLElement {
   constructor() {
     super();
     this.setAttribute("role", "region");
   }
+
+  static get getSelector() {
+    return "mt-accordion-content";
+  }
 }
 
-customElements.define("mt-accordion-content", MtAccordionContent);
+customElements.define(MtAccordionContent.getSelector, MtAccordionContent);
 
 class MtAccordionItem extends HTMLElement {
   set disabled(isDisabled) {
@@ -55,14 +63,14 @@ class MtAccordionItem extends HTMLElement {
     return this.hasAttribute("expanded");
   }
 
-  id = `mt-accordion-item-${index++}`;
+  _id = `${MtAccordionItem.getSelector}-${index++}`;
 
   connectedCallback() {
-    this.header = this.querySelector("mt-accordion-header");
-    this.header.setAttribute("aria-controls", this.id);
+    this.header = this.querySelector(MtAccordionHeader.getSelector);
+    this.header.setAttribute("aria-controls", this._id);
 
-    this.content = this.querySelector("mt-accordion-content");
-    this.content.setAttribute("aria-labelledby", this.id);
+    this.content = this.querySelector(MtAccordionContent.getSelector);
+    this.content.setAttribute("aria-labelledby", this._id);
 
     this.setAriaExpanded(this.expanded);
     this.setDisable(this.disabled);
@@ -86,15 +94,19 @@ class MtAccordionItem extends HTMLElement {
       this.header.setAttribute("tabindex", isDisabled ? "-1" : "0");
     }
   }
+
+  static get getSelector() {
+    return "mt-accordion-item";
+  }
 }
 
-customElements.define("mt-accordion-item", MtAccordionItem);
+customElements.define(MtAccordionItem.getSelector, MtAccordionItem);
 
 const template = document.createElement("template");
 template.innerHTML = `
-      <style>:host {display: block;}</style>
-      <slot></slot>
-  `;
+        <style>:host {display: block;}</style>
+        <slot></slot>
+    `;
 
 class MtAccordion extends HTMLElement {
   set multi(isMulti) {
@@ -157,12 +169,12 @@ class MtAccordion extends HTMLElement {
 
   toggle = (event) => {
     if (!this.disabled) {
-      const header = event.target.closest("mt-accordion-header");
+      const header = event.target.closest(MtAccordionHeader.getSelector);
       if (!header) {
         return;
       }
 
-      const item = header.closest("mt-accordion-item");
+      const item = header.closest(MtAccordionItem.getSelector);
       const accordion = this.items.find((el) => el === item);
 
       if (accordion) {
@@ -172,7 +184,7 @@ class MtAccordion extends HTMLElement {
 
         if (!this.multi) {
           this.items.forEach((item) => {
-            if (item.id !== accordion.id) {
+            if (item._id !== accordion._id) {
               item.expanded = false;
             }
           });
@@ -182,6 +194,10 @@ class MtAccordion extends HTMLElement {
       }
     }
   };
+
+  static get getSelector() {
+    return "mt-accordion";
+  }
 }
 
-customElements.define("mt-accordion", MtAccordion);
+customElements.define(MtAccordion.getSelector, MtAccordion);
