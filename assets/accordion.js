@@ -162,8 +162,8 @@ class MtAccordion extends HTMLElement {
         return;
       }
 
-      const id = header.getAttribute("aria-controls");
-      const accordion = this.items.find((el) => el.id === id);
+      const item = header.closest("mt-accordion-item");
+      const accordion = this.items.find((el) => el === item);
 
       if (accordion) {
         if (accordion.disabled) {
