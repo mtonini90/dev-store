@@ -1,6 +1,15 @@
-mt-accordion-item {
-    display: block;
+mt-accordion-item,
+mt-accordion-header,
+mt-accordion-content {
+  display: block;
 }
+
+mt-accordion-item[hidden],
+mt-accordion-header[hidden],
+mt-accordion-content[hidden] {
+  display: none;
+}
+
 
 .accordion__content {
   height: 0;
