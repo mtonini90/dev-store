@@ -1,7 +1,3 @@
-function coerceBoolean(value) {
-  return (typeof value === "string" || !!value) && value !== "false";
-}
-
 let index = 0;
 
 class MtAccordionHeader extends HTMLElement {
@@ -69,7 +65,7 @@ class MtAccordionItem extends HTMLElement {
   }
 
   attributeChangedCallback(property, oldValue, newValue) {
-    const value = coerceBoolean(newValue);
+    const value = newValue !== null;
     switch (property) {
       case "disabled":
         this.setDisable(value);
@@ -87,12 +83,12 @@ class MtAccordionItem extends HTMLElement {
   }
 
   setAriaExpanded(isExpanded) {
-    if (this.header) this.header.setAttribute("aria-expanded", `${isExpanded}`);
+    if (this.header) this.header.setAttribute("aria-expanded", isExpanded);
   }
 
   setDisable(isDisabled) {
     if (this.header) {
-      this.header.setAttribute("aria-disabled", `${isDisabled}`);
+      this.header.setAttribute("aria-disabled", isDisabled);
       this.header.setAttribute("tabindex", isDisabled ? "-1" : "0");
     }
   }
