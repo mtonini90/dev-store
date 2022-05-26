@@ -33,14 +33,10 @@ customElements.define(MtAccordionContent.getSelector, MtAccordionContent);
 class MtAccordionItem extends HTMLElement {
   set disabled(isDisabled) {
     if (isDisabled) {
-      if (!this.disabled) {
-        this.setAttribute("disabled", "");
-      }
+      this.setAttribute("disabled", "");
     } else {
       this.removeAttribute("disabled");
     }
-
-    this.setDisable(isDisabled);
   }
 
   get disabled() {
@@ -49,14 +45,10 @@ class MtAccordionItem extends HTMLElement {
 
   set expanded(isExpanded) {
     if (isExpanded) {
-      if (!this.expanded) {
-        this.setAttribute("expanded", "");
-      }
+      this.setAttribute("expanded", "");
     } else {
       this.removeAttribute("expanded");
     }
-
-    this.setAriaExpanded(isExpanded);
   }
 
   get expanded() {
@@ -77,7 +69,17 @@ class MtAccordionItem extends HTMLElement {
   }
 
   attributeChangedCallback(property, oldValue, newValue) {
-    if (oldValue !== newValue) this[property] = coerceBoolean(newValue);
+    const value = coerceBoolean(newValue);
+    switch (property) {
+      case "disabled":
+        this.setDisable(value);
+        break;
+      case "expanded":
+        this.setAriaExpanded(value);
+        break;
+      default:
+        break;
+    }
   }
 
   static get observedAttributes() {
@@ -111,9 +113,7 @@ template.innerHTML = `
 class MtAccordion extends HTMLElement {
   set multi(isMulti) {
     if (isMulti) {
-      if (!this.multi) {
-        this.setAttribute("multi", "");
-      }
+      this.setAttribute("multi", "");
     } else {
       this.removeAttribute("multi");
     }
@@ -135,10 +135,6 @@ class MtAccordion extends HTMLElement {
     this.contentSlot.addEventListener("slotchange", this.setItems);
     this.addEventListener("click", this.toggle);
     this.addEventListener("keydown", this.keydownHandler);
-  }
-
-  attributeChangedCallback(property, oldValue, newValue) {
-    if (oldValue !== newValue) this[property] = coerceBoolean(newValue);
   }
 
   static get observedAttributes() {
